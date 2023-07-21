@@ -1,0 +1,348 @@
+# Voting-APP
+Commands used during the assignment:
+1. sudo su
+2. kubectl delete all --all
+3. cd $home
+4. yum install git -y
+5. git clone  https://github.com/ashishrpandey/example-voting-app
+6. cd /root/example-voting-app
+7. ll
+8. cd k8s-specifications/
+9. ll
+10. kubectl apply -f .
+11. kubectl get po
+12. kubectl get svc
+13. vi result-service.yaml
+14. vi vote-service.yaml
+15. kubectl apply -f .
+16. kubectl get po
+17. kubectl get svc
+18. kubectl logs worker-dd46d7584-mkgjc
+19. kubectl get po
+20. kubectl delete po vote-94849dc97-4w6ns
+21. kubectl delete po worker-dd46d7584-mkgjc
+22. kubectl logs worker-dd46d7584-496rd
+23. kubectl delete po db-b54cd94f4-v8b8n
+24. kubectl delete po result-5d57b59f4b-ccnkv worker-dd46d7584-496rd
+
+============================================================================
+snapshot of logs:
+
+[ec2-user@ip-172-31-38-86 ~]$ sudo su
+[root@ip-172-31-38-86 ec2-user]# kubectl get po
+No resources found in default namespace.
+[root@ip-172-31-38-86 ec2-user]#
+[root@ip-172-31-38-86 ec2-user]# kubectl get node
+NAME                                              STATUS   ROLES    AGE     VERS                                                                             ION
+ip-172-31-38-86.ap-southeast-1.compute.internal   Ready    master   6d18h   v1.1                                                                             8.5
+ip-172-31-43-86.ap-southeast-1.compute.internal   Ready    <none>   6d18h   v1.1                                                                             8.5
+[root@ip-172-31-38-86 ec2-user]#
+[root@ip-172-31-38-86 ec2-user]#
+[root@ip-172-31-38-86 ec2-user]# kubectl delete all --all
+service "kubernetes" deleted
+[root@ip-172-31-38-86 ec2-user]#
+[root@ip-172-31-38-86 ec2-user]# kubectl get node
+NAME                                              STATUS   ROLES    AGE     VERSION
+ip-172-31-38-86.ap-southeast-1.compute.internal   Ready    master   6d18h   v1.18.5
+ip-172-31-43-86.ap-southeast-1.compute.internal   Ready    <none>   6d18h   v1.18.5
+[root@ip-172-31-38-86 ec2-user]#
+[root@ip-172-31-38-86 ec2-user]# cd $home
+[root@ip-172-31-38-86 ~]#
+[root@ip-172-31-38-86 ~]#
+[root@ip-172-31-38-86 ~]# yum install git -y
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                                                                                            | 3.7 kB  00:00:00
+11 packages excluded due to repository priority protections
+Package git-2.40.1-1.amzn2.0.1.x86_64 already installed and latest version
+Nothing to do
+[root@ip-172-31-38-86 ~]# git clone  https://github.com/ashishrpandey/example-voting-app
+Cloning into 'example-voting-app'...
+remote: Enumerating objects: 494, done.
+remote: Total 494 (delta 0), reused 0 (delta 0), pack-reused 494
+Receiving objects: 100% (494/494), 236.18 KiB | 8.75 MiB/s, done.
+Resolving deltas: 100% (179/179), done.
+[root@ip-172-31-38-86 ~]# cd /root/example-voting-app
+[root@ip-172-31-38-86 example-voting-app]# ll
+total 96
+-rw-r--r-- 1 root root 54824 Jul 19 06:53 architecture.png
+-rw-r--r-- 1 root root   609 Jul 19 06:53 dockercloud.yml
+-rw-r--r-- 1 root root   808 Jul 19 06:53 docker-compose-javaworker.yml
+-rw-r--r-- 1 root root   400 Jul 19 06:53 docker-compose-simple.yml
+-rw-r--r-- 1 root root   808 Jul 19 06:53 docker-compose.yml
+-rw-r--r-- 1 root root  1692 Jul 19 06:53 docker-stack.yml
+drwxr-xr-x 2 root root   250 Jul 19 06:53 k8s-specifications
+-rw-r--r-- 1 root root 10758 Jul 19 06:53 LICENSE
+-rw-r--r-- 1 root root   185 Jul 19 06:53 MAINTAINERS
+-rw-r--r-- 1 root root  2182 Jul 19 06:53 README.md
+drwxr-xr-x 5 root root   133 Jul 19 06:53 result
+drwxr-xr-x 4 root root    93 Jul 19 06:53 vote
+drwxr-xr-x 3 root root    70 Jul 19 06:53 worker
+[root@ip-172-31-38-86 example-voting-app]# cd k8s-specifications/
+[root@ip-172-31-38-86 k8s-specifications]# ll
+total 36
+-rw-r--r-- 1 root root 401 Jul 19 06:53 db-deployment.yaml
+-rw-r--r-- 1 root root 146 Jul 19 06:53 db-service.yaml
+-rw-r--r-- 1 root root 402 Jul 19 06:53 redis-deployment.yaml
+-rw-r--r-- 1 root root 152 Jul 19 06:53 redis-service.yaml
+-rw-r--r-- 1 root root 299 Jul 19 06:53 result-deployment.yaml
+-rw-r--r-- 1 root root 195 Jul 19 06:53 result-service.yaml
+-rw-r--r-- 1 root root 289 Jul 19 06:53 vote-deployment.yaml
+-rw-r--r-- 1 root root 192 Jul 19 06:53 vote-service.yaml
+-rw-r--r-- 1 root root 292 Jul 19 06:53 worker-deployment.yaml
+[root@ip-172-31-38-86 k8s-specifications]# cd /root/example-voting-app/k8s-specifications
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# ll
+total 36
+-rw-r--r-- 1 root root 401 Jul 19 06:53 db-deployment.yaml
+-rw-r--r-- 1 root root 146 Jul 19 06:53 db-service.yaml
+-rw-r--r-- 1 root root 402 Jul 19 06:53 redis-deployment.yaml
+-rw-r--r-- 1 root root 152 Jul 19 06:53 redis-service.yaml
+-rw-r--r-- 1 root root 299 Jul 19 06:53 result-deployment.yaml
+-rw-r--r-- 1 root root 195 Jul 19 06:53 result-service.yaml
+-rw-r--r-- 1 root root 289 Jul 19 06:53 vote-deployment.yaml
+-rw-r--r-- 1 root root 192 Jul 19 06:53 vote-service.yaml
+-rw-r--r-- 1 root root 292 Jul 19 06:53 worker-deployment.yaml
+[root@ip-172-31-38-86 k8s-specifications]# kubectl apply -f .
+deployment.apps/db created
+service/db created
+deployment.apps/redis created
+service/redis created
+deployment.apps/result created
+deployment.apps/vote created
+deployment.apps/worker created
+Error from server (Invalid): error when creating "result-service.yaml": Service "result" is invalid: spec.ports[0].nodePort: Invalid value: 31001: provided port is already allocated
+Error from server (Invalid): error when creating "vote-service.yaml": Service "vote" is invalid: spec.ports[0].nodePort: Invalid value: 31000: provided port is already allocated
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          119s
+redis-868d64d78-rd82z     1/1     Running   0          119s
+result-5d57b59f4b-ccnkv   1/1     Running   0          119s
+vote-94849dc97-4w6ns      1/1     Running   0          119s
+worker-dd46d7584-mkgjc    1/1     Running   0          119s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+db           ClusterIP   10.96.65.186    <none>        5432/TCP   2m48s
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP    8m39s
+redis        ClusterIP   10.109.192.93   <none>        6379/TCP   2m48s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# ll
+total 36
+-rw-r--r-- 1 root root 401 Jul 19 06:53 db-deployment.yaml
+-rw-r--r-- 1 root root 146 Jul 19 06:53 db-service.yaml
+-rw-r--r-- 1 root root 402 Jul 19 06:53 redis-deployment.yaml
+-rw-r--r-- 1 root root 152 Jul 19 06:53 redis-service.yaml
+-rw-r--r-- 1 root root 299 Jul 19 06:53 result-deployment.yaml
+-rw-r--r-- 1 root root 195 Jul 19 06:53 result-service.yaml
+-rw-r--r-- 1 root root 289 Jul 19 06:53 vote-deployment.yaml
+-rw-r--r-- 1 root root 192 Jul 19 07:01 vote-service.yaml
+-rw-r--r-- 1 root root 292 Jul 19 06:53 worker-deployment.yaml
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# vi result-service.yaml
+[root@ip-172-31-38-86 k8s-specifications]# vi vote-service.yaml
+[root@ip-172-31-38-86 k8s-specifications]# kubectl apply -f .
+deployment.apps/db unchanged
+service/db unchanged
+deployment.apps/redis unchanged
+service/redis unchanged
+deployment.apps/result unchanged
+service/result unchanged
+deployment.apps/vote unchanged
+service/vote created
+deployment.apps/worker unchanged
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          6m5s
+redis-868d64d78-rd82z     1/1     Running   0          6m5s
+result-5d57b59f4b-ccnkv   1/1     Running   0          6m5s
+vote-94849dc97-4w6ns      1/1     Running   0          6m5s
+worker-dd46d7584-mkgjc    1/1     Running   0          6m5s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get svc
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+db           ClusterIP   10.96.65.186     <none>        5432/TCP         6m10s
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP          12m
+redis        ClusterIP   10.109.192.93    <none>        6379/TCP         6m10s
+result       NodePort    10.108.33.147    <none>        5001:31002/TCP   44s
+vote         NodePort    10.101.219.192   <none>        5000:31003/TCP   13s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          9m52s
+redis-868d64d78-rd82z     1/1     Running   0          9m52s
+result-5d57b59f4b-ccnkv   1/1     Running   0          9m52s
+vote-94849dc97-4w6ns      1/1     Running   0          9m52s
+worker-dd46d7584-mkgjc    1/1     Running   0          9m52s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl logs worker-dd46d7584-mkgjc
+Waiting for db
+Waiting for db
+Waiting for db
+Connected to db
+Found redis at 10.109.192.93
+Connecting to redis
+Processing vote for 'a' by '75465a8303d5dad'
+Processing vote for 'b' by '75465a8303d5dad'
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]#
+
+==========================================================================
+Deleting of voting pod :
+>> new voting pod will taken place of old pod.
+>> no change observed on front end (gui) it worked fine.
+
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# clear
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          23m
+redis-868d64d78-rd82z     1/1     Running   0          23m
+result-5d57b59f4b-ccnkv   1/1     Running   0          23m
+vote-94849dc97-4w6ns      1/1     Running   0          23m
+worker-dd46d7584-mkgjc    1/1     Running   0          23m
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl delete po vote-94849dc97-4w6ns
+pod "vote-94849dc97-4w6ns" deleted
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          24m
+redis-868d64d78-rd82z     1/1     Running   0          24m
+result-5d57b59f4b-ccnkv   1/1     Running   0          24m
+vote-94849dc97-jxtv9      1/1     Running   0          15s
+worker-dd46d7584-mkgjc    1/1     Running   0          24m
+[root@ip-172-31-38-86 k8s-specifications]#
+=======================================================================
+Deleting of worker pod
+>>Logs will get delete when deleting of worker pod.
+
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          24m
+redis-868d64d78-rd82z     1/1     Running   0          24m
+result-5d57b59f4b-ccnkv   1/1     Running   0          24m
+vote-94849dc97-jxtv9      1/1     Running   0          15s
+worker-dd46d7584-mkgjc    1/1     Running   0          24m
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl logs worker-dd46d7584-mkgjc
+Waiting for db
+Waiting for db
+Waiting for db
+Connected to db
+Found redis at 10.109.192.93
+Connecting to redis
+Processing vote for 'a' by '75465a8303d5dad'
+Processing vote for 'b' by '75465a8303d5dad'
+Processing vote for 'a' by '75465a8303d5dad'
+Processing vote for 'b' by '75465a8303d5dad'
+Processing vote for 'a' by '75465a8303d5dad'
+Processing vote for 'a' by '75465a8303d5dad'
+Processing vote for 'b' by '75465a8303d5dad'
+Processing vote for 'a' by '75465a8303d5dad'
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl delete worker-dd46d7584-mkgjc
+error: the server doesn't have a resource type "worker-dd46d7584-mkgjc"
+[root@ip-172-31-38-86 k8s-specifications]# kubectl delete po worker-dd46d7584-mkgjc
+pod "worker-dd46d7584-mkgjc" deleted
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          32m
+redis-868d64d78-rd82z     1/1     Running   0          32m
+result-5d57b59f4b-ccnkv   1/1     Running   0          32m
+vote-94849dc97-jxtv9      1/1     Running   0          8m7s
+worker-dd46d7584-xhx7n    1/1     Running   0          28s
+[root@ip-172-31-38-86 k8s-specifications]# kubectl logs worker-dd46d7584-xhx7n
+Connected to db
+Found redis at 10.109.192.93
+Connecting to redis
+Processing vote for 'b' by '75465a8303d5dad'
+Processing vote for 'a' by '75465a8303d5dad'
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          33m
+redis-868d64d78-rd82z     1/1     Running   0          33m
+result-5d57b59f4b-ccnkv   1/1     Running   0          33m
+vote-94849dc97-jxtv9      1/1     Running   0          8m46s
+worker-dd46d7584-xhx7n    1/1     Running   0          67s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl delete po worker-dd46d7584-xhx7n
+pod "worker-dd46d7584-xhx7n" deleted
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          33m
+redis-868d64d78-rd82z     1/1     Running   0          33m
+result-5d57b59f4b-ccnkv   1/1     Running   0          33m
+vote-94849dc97-jxtv9      1/1     Running   0          9m28s
+worker-dd46d7584-496rd    1/1     Running   0          25s
+
+>> After deleting of old worker pod, logs will be deleted and new worker pod will taken place of old pod.
+
+[root@ip-172-31-38-86 k8s-specifications]# kubectl logs worker-dd46d7584-496rd
+Connected to db
+Found redis at 10.109.192.93
+Connecting to redis
+[root@ip-172-31-38-86 k8s-specifications]#
+========================================================================
+comment on WHY result app STOPPED working after db pod stop:
+
+>> Deleting of db pod
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-v8b8n        1/1     Running   0          43m
+redis-868d64d78-rd82z     1/1     Running   0          43m
+result-5d57b59f4b-ccnkv   1/1     Running   0          43m
+vote-94849dc97-jxtv9      1/1     Running   0          18m
+worker-dd46d7584-496rd    1/1     Running   0          9m45s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]# kubectl delete po db-b54cd94f4-v8b8n
+pod "db-b54cd94f4-v8b8n" deleted
+[root@ip-172-31-38-86 k8s-specifications]#
+
+>> After deleting of db pod, result and worker pod got restarted and in result forntend gui it showing cats: 50 and dogs: 50 because of interconnection between db with worker and result pods (db pod is a storage pod where worker will push the votes and result pod pull the votes)
+
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-qp56s        1/1     Running   0          39s
+redis-868d64d78-rd82z     1/1     Running   0          45m
+result-5d57b59f4b-ccnkv   1/1     Running   1          45m
+vote-94849dc97-jxtv9      1/1     Running   0          21m
+worker-dd46d7584-496rd    1/1     Running   1          12m
+[root@ip-172-31-38-86 k8s-specifications]#
+=======================================================================
+STEPS TO MAKE REUSLT POD WORK:
+>> Deleted result and worker pods.
+
+[root@ip-172-31-38-86 k8s-specifications]# kubectl delete po result-5d57b59f4b-ccnkv worker-dd46d7584-496rd
+pod "result-5d57b59f4b-ccnkv" deleted
+pod "worker-dd46d7584-496rd" deleted
+[root@ip-172-31-38-86 k8s-specifications]# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-qp56s        1/1     Running   0          2m20s
+redis-868d64d78-rd82z     1/1     Running   0          47m
+result-5d57b59f4b-mxlx5   1/1     Running   0          6s
+vote-94849dc97-jxtv9      1/1     Running   0          23m
+worker-dd46d7584-d95b7    1/1     Running   0          6s
+[root@ip-172-31-38-86 k8s-specifications]#
+[root@ip-172-31-38-86 k8s-specifications]#
+
+=========================================================================
+Some jargons:
+1) -w (watch command) 
+2) kubectl apply -f .
+3) kubectl get pods --show-labels
+4) kubectl get pods -o wide
+5) docker create image
+6) docker commit container image
+7) docker logs -ft container
+8) docker ps -a
+9) docker images
+10) docker rmi wordpress
+11) docker ps 
+12) docker login
+13) docker ps -all
+14) kubectl get pods --all
+15) kubectl get pods --all-namespaces 
