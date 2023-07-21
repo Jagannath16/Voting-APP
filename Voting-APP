@@ -5,25 +5,28 @@ Commands used during the assignment:
 3. cd $home
 4. yum install git -y
 5. git clone  https://github.com/ashishrpandey/example-voting-app
-6. cd /root/example-voting-app
-7. ll
-8. cd k8s-specifications/
-9. ll
-10. kubectl apply -f .
-11. kubectl get po
-12. kubectl get svc
-13. vi result-service.yaml
-14. vi vote-service.yaml
-15. kubectl apply -f .
-16. kubectl get po
-17. kubectl get svc
-18. kubectl logs worker-dd46d7584-mkgjc
+6. vi app.py
+7. vi Program.cs
+8. vi  server.js
+9. cd /root/example-voting-app
+10. ll
+11. cd k8s-specifications/
+12. ll
+13. kubectl apply -f .
+14. kubectl get po
+15. kubectl get svc
+16. vi result-service.yaml
+17. vi vote-service.yaml
+18. kubectl apply -f .
 19. kubectl get po
-20. kubectl delete po vote-94849dc97-4w6ns
-21. kubectl delete po worker-dd46d7584-mkgjc
-22. kubectl logs worker-dd46d7584-496rd
-23. kubectl delete po db-b54cd94f4-v8b8n
-24. kubectl delete po result-5d57b59f4b-ccnkv worker-dd46d7584-496rd
+20. kubectl get svc
+21. kubectl logs worker-dd46d7584-mkgjc
+22. kubectl get po
+23. kubectl delete po vote-94849dc97-4w6ns
+24. kubectl delete po worker-dd46d7584-mkgjc
+25. kubectl logs worker-dd46d7584-496rd
+26. kubectl delete po db-b54cd94f4-v8b8n
+27. kubectl delete po result-5d57b59f4b-ccnkv worker-dd46d7584-496rd
 
 ============================================================================
 snapshot of logs:
